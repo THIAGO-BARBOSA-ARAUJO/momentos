@@ -1,0 +1,25 @@
+<div class="moment">
+  <h1>{{ moment?.title }}</h1>
+  <img
+    src="{{ baseApiUrl }}uploads/{{ moment?.image }}"
+    alt="{{ moment?.title }}"
+  />
+  <div class="about-moment">
+    <h3>Sobre esse momento:</h3>
+    <p>{{ moment?.description }}</p>
+  </div>
+  <div class="actions">
+    <h3>Ações:</h3>
+    <div class="btns">
+      <div routerLink="/moments/edit/{{ moment?.id }}" class="edit-btn">
+        <span class="edit"><mat-icon>edit</mat-icon> </span>Editar
+      </div>
+      <button class="remove-btn" (click)="removeHandle(moment?.id!)">
+        <span class="remove"><mat-icon>close</mat-icon> Excluir</span>
+      </button>
+    </div>
+  </div>
+  <div class="comments">
+    <h3>Comentários (0):</h3>
+  </div>
+</div>

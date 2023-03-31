@@ -8,8 +8,9 @@ import { Moment } from 'src/app/Moments';
   styleUrls: ['./moment-form.component.css'],
 })
 export class MomentFormComponent implements OnInit {
-  @Output() onSubmit = new EventEmitter<Moment>()
+  @Output() onSubmit = new EventEmitter<Moment>();
   @Input() btnText!: string;
+  @Input() momentDate: Moment | null = null;
 
   momentForm!: FormGroup;
 
@@ -17,9 +18,14 @@ export class MomentFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.momentForm = new FormGroup({
-      id: new FormControl(''),
-      title: new FormControl('', [Validators.required]),
-      description: new FormControl('', [Validators.required]),
+      id: new FormControl(this.momentDate ? this.momentDate.id : ''),
+      title: new FormControl(this.momentDate ? this.momentDate.title : '', [
+        Validators.required,
+      ]),
+      description: new FormControl(
+        this.momentDate ? this.momentDate.description : '',
+        [Validators.required]
+      ),
       image: new FormControl(''),
     });
   }
@@ -34,14 +40,14 @@ export class MomentFormComponent implements OnInit {
 
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
-    this.momentForm.patchValue({image: file})
+    this.momentForm.patchValue({ image: file });
   }
 
-  submit(){
+  submit() {
     if (this.momentForm.invalid) {
-      return
+      return;
     }
-    console.log(this.momentForm.value)
-    this.onSubmit.emit(this.momentForm.value)
+    console.log(this.momentForm.value);
+    this.onSubmit.emit(this.momentForm.value);
   }
 }
